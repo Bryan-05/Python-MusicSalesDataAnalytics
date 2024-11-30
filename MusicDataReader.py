@@ -11,9 +11,11 @@ def viewData(data):
         print("\t\t2. Display specific rows (by index range)")
         print("\t\t3. Display specific columns (by names)")
         print("\t\t4. Filter rows")
-        print("\t\t5. Go back")
+        print("\t\t5. Display specific title")
+        print("\t\t6. Display specific artist")
+        print("\t\t7. Go back")
         userInput = input("Enter a number option: ")
-        if userInput == "5":
+        if userInput == "7":
             break
         elif userInput == "1":
             print(data)
@@ -27,6 +29,15 @@ def viewData(data):
             columns = [col.strip() for col in columns]
             print("Displaying columns selected:")
             print(data[columns])
+        elif userInput == "5":
+            title = input("Enter the title you're searching for: ")
+            title_data = data.loc[data['title'] == title]
+            print(title_data)
+        elif userInput == "6":
+            artist = input("Enter the artist you're searching for: ")
+            artist_data = data.loc[data['performer'] == artist]
+            print(artist_data)
+
 
 
 def readFile():
@@ -42,7 +53,7 @@ def readFile():
             print("\t3. Filter the data")
             print("\t4. Create/view a graph")
             print("\t5. Go back")
-            userInput = input("\tEnter a number option:")
+            userInput = input("\tEnter a number option: ")
             if userInput == "5":
                 break
             elif userInput == "1":
