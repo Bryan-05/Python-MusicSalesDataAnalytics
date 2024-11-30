@@ -38,8 +38,51 @@ def viewData(data):
             artist_data = data.loc[data['performer'] == artist]
             print(artist_data)
 
-
-
+def graphData(data):
+    while True:
+        print("Column option: chart_week, current_week, title, performer, last_week, peak_pos, wks_on_chart")
+        xcoord = input("Enter the column you'd like to graph for you x-axis: ")
+        ycoord = input("Enter the column you'd like to graph for you y-axis: ")
+        if xcoord in data.columns and ycoord in data.columns:
+            break
+        else:
+            print("Error Occurred! The x-coord or y-coord you inputted is incorrect")
+    while True:
+        print("Graph Options")
+        print("1. Bar Plots")
+        print("2. Histogram")
+        print("3. Boxplot")
+        print("4. Scatter")
+        print("5. Pie")
+        print("6. Line")
+        graphType = input("Enter the number corresponding for a specific graph type: ")
+        if graphType == "1":
+            graphType = "barh"
+            break
+        elif graphType == "2":
+            graphType = "hist"
+            break
+        elif graphType == "3":
+            graphType == "box"
+            break
+        elif graphType == "4":
+            graphType == "scatter"
+            break
+        elif graphType == "5":
+            graphType == "pie"
+            break
+        elif graphType == "6":
+            graphType == "line"
+            break
+        else:
+            print("Error Occured! Type a valid entry.")
+    if graphType == "line":
+        data.plot(x = xcoord, y = ycoord)
+    else:
+        data.plot(kind = graphType, x = xcoord, y = ycoord)
+    plt.title(f"{xcoord} vs. {ycoord}")
+    plt.show()
+    
 def readFile():
     try:
         fileName = input("Enter file name (include the .csv extension): ")
@@ -64,6 +107,7 @@ def readFile():
                 print("Filter the data")
             elif userInput == "4":
                 print("Create a graph")
+                graphData(data)
             else:
                 print("Option not found!")
     except OSError:
