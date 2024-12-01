@@ -13,12 +13,11 @@ def viewData(data):
         print("1. Display all data")
         print("2. Display specific rows (by index range)")
         print("3. Display specific columns (by names)")
-        print("4. Filter rows")
-        print("5. Display specific title")
-        print("6. Display specific artist")
-        print("7. Go back")
+        print("4. Display specific title")
+        print("5. Display specific artist")
+        print("6. Go back")
         userInput = input("Enter a number option: ")
-        if userInput == "7":
+        if userInput == "6":
             break
         elif userInput == "1":
             print(data)
@@ -32,11 +31,11 @@ def viewData(data):
             columns = [col.strip() for col in columns]
             print("Displaying columns selected:")
             print(data[columns])
-        elif userInput == "5":
+        elif userInput == "4":
             title = input("Enter the title you're searching for: ")
             title_data = data.loc[data['title'] == title]
             print(title_data)
-        elif userInput == "6":
+        elif userInput == "5":
             artist = input("Enter the artist you're searching for: ")
             artist_data = data.loc[data['performer'] == artist]
             print(artist_data)
