@@ -168,7 +168,7 @@ def graphData(data):
                 plt.plot(data[xcoord], data[ycoord])
                 plt.xlabel(xcoord)
                 plt.ylabel(ycoord)
-                plt.title(title)
+                plt.title(titleInput)
                 plt.grid(True)
                 plt.show()
                 break
