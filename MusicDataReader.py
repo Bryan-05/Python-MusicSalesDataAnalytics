@@ -38,7 +38,7 @@ def viewData(data):
             print(title_data)
         elif userInput == "6":
             artist = input("Enter the artist you're searching for: ")
-            artist_data = data.loc[data['performer'] == artist]
+            artist_data = data.loc[data['performer'].str.contains(artist)]
             print(artist_data)
 
 #Give options for filtering data based on input
@@ -222,6 +222,7 @@ def readOptionInput():
         print("Options: ")
         print("1. Analyze a new csv file: ")
         print("2. Access an existing graph")
+        print("q. To Quit")
         userInput = input("Enter a number option: ")
         if userInput.lower() == "q":
             break
