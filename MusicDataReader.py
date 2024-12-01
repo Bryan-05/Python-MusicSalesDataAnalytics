@@ -20,22 +20,27 @@ def viewData(data):
         if userInput == "6":
             break
         elif userInput == "1":
+            #Displays all data in the data file
             print(data)
         elif userInput == "2":
+            #Displays the data for a specific row range that the user specifies.
             start = int(input("Enter the starting index: "))
             end = int(input("Enter the ending index: "))
             print(f"Displaying rows {start} - {end}")
             print(data.iloc[start:end])
         elif userInput == "3":
+            #Displays columns of the data that the user specifies.
             columns = input("Enter the column names separated by commas: ").split(",")
             columns = [col.strip() for col in columns]
             print("Displaying columns selected:")
             print(data[columns])
         elif userInput == "4":
+            #Displays the data for a specific song title
             title = input("Enter the title you're searching for: ")
             title_data = data.loc[data['title'] == title]
             print(title_data)
         elif userInput == "5":
+            #Displays the data for a specific performer name
             artist = input("Enter the artist you're searching for: ")
             artist_data = data.loc[data['performer'] == artist]
             print(artist_data)
@@ -52,31 +57,36 @@ def filterData(data):
         print("5. By weeks on chart: ")
         print("6. Go back")
         userInput = input("Enter an number: ")
+        #Sends the user back to the previous menu with the data unfiltered.
         if userInput == "6":
             readDataOption(data)
         elif userInput == "1":
+            #Filters the data by chart weeks that the user specifies
             start = input("Enter the start week (YYYY-MM-DD): ")
             end = input("Enter the end week: (YYYY-MM-DD): ")
             newData = data[(data["chart_week"] >= start) & (data["chart_week"] <= end)]
         elif userInput == "2":
+            #Filters the data by song title
             title = input("Enter the song title: ")
             newData = data[data["title"] == title]
         elif userInput == "3":
+            #Filters the data by performer name
             performer = input("Enter the performer name: ")
             newData = data[data["performer"].str.contains(performer)]
         elif userInput == "4":
+            #Filters the data by peak positions that the user specifies.
             start = int(input("Enter the highest position: "))
             end = int(input("Enter the lowest position: "))
             newData = data[(data["peak_pos"] >= start) & (data["peak_pos"] <= end)]
-            print(newData)
         elif userInput == "5":
+            #Filters the data by the range of weeks in the chart that the user specifies.
             start = int(input("Enter the minimum amount of weeks in the chart: "))
             end = int(input("Enter the maximum amount of weeks in the chart: "))
             newData = data[(data["wks_on_chart"] >= start) & (data["wks_on_chart"] <= end)]
-            print(newData)
         else:
             print("Invalid input, returning to previous menu...")
             newData = data
+        #Sends user to the previous menu with the new filtered data.
         readDataOption(newData)
     except:
         print("Encountered error, returning to previous menu...")
@@ -84,12 +94,14 @@ def filterData(data):
 
 
 
-#
+#Displays options for the type of graph users want to create.
+#ycoord is only applied to graphs that utilize it.
 def graphData(data):
     while True:
+        #User enters the xcoord and ycoord for a potential plot
         print("Column option: chart_week, current_week, title, performer, last_week, peak_pos, wks_on_chart")
-        xcoord = input("Enter the column you'd like to graph for you x-axis (must be numeric for box plot): ")
-        ycoord = input("Enter the column you'd like to graph for you y-axis: ")
+        xcoord = input("Enter the column you'd like to graph for your x-axis (must be numeric for box plot): ")
+        ycoord = input("Enter the column you'd like to graph for your y-axis: ")
         if xcoord in data.columns and ycoord in data.columns:
             break
         else:
@@ -105,6 +117,7 @@ def graphData(data):
             print("6. Line")
             graphType = input("Enter the number corresponding for a specific graph type: ")
             if graphType == "1":
+                #Creates a bar plot using xcoord and ycoord
                 plt.bar(data[xcoord], data[ycoord])
                 plt.xlabel(xcoord)
                 plt.ylabel(ycoord)
@@ -115,6 +128,7 @@ def graphData(data):
                 plt.show()
                 break
             elif graphType == "2":
+                #Creates a histogram, ycoord is replaced by frequency label
                 binNum = int(input("Enter the number of bins"))
                 title = input("Enter chart title: ")
                 plt.hist(data[xcoord], bins=binNum)
@@ -124,6 +138,8 @@ def graphData(data):
                 plt.show()
                 break
             elif graphType == "3":
+                #Creates a boxplot, ycoord is not used
+                #xcoord must be a numeric value, otherwise error is thrown
                 title = input("Enter chart title: ")
                 plt.boxplot(data[xcoord], vert=False, patch_artist=True)
                 plt.xlabel(xcoord)
@@ -131,6 +147,7 @@ def graphData(data):
                 plt.show()
                 break
             elif graphType == "4":
+                #Creates a scatter plot.
                 title = input("Enter chart title: ")
                 plt.scatter(data[xcoord], data[ycoord], alpha=0.7)
                 plt.xlabel(xcoord)
@@ -139,12 +156,14 @@ def graphData(data):
                 plt.show()
                 break
             elif graphType == "5":
+                #Creates a pie chart.
                 plt.pie(data[xcoord], labels=data[ycoord], autopct='%1.1f%%', startangle=90)
                 titleInput = input("Enter chart title: ")
                 plt.title(titleInput)
                 plt.show()
                 break
             elif graphType == "6":
+                #Creates a line chart
                 titleInput = input("Enter chart title: ")
                 plt.plot(data[xcoord], data[ycoord])
                 plt.xlabel(xcoord)
@@ -156,6 +175,7 @@ def graphData(data):
             else:
                 print("Error Occured! Type a valid entry.")
         userInput = input("Save plot? (Y/N): ")
+        #Saves chart creates by user to the user's local machine
         if userInput.lower() == "y":
             title = input("Enter the name of the file (do not including extension): ")
             title = f"{title}.jpg"
@@ -163,7 +183,7 @@ def graphData(data):
     except:
         print("Input error.")
 
-#Reads a csv file and asks user what they want to do with the file
+#Displays options for how to analyze data
 def readDataOption(data):
     try:
         print()
@@ -191,6 +211,7 @@ def readDataOption(data):
         print("Encountered error, returning to previous menu...")
         print()
 
+#Reads a data file to perform functions on
 def readFile():
     try:
         fileName = input("Enter file name (include the .csv extension): ")
@@ -201,6 +222,8 @@ def readFile():
         print("Error reading file, returning to previous menu...")
         readOptionInput()
 
+#Called when user wants to access an existing chart.
+#Asks user for the file name and displays the chart.
 def accessPlot():
     try:
         title = input("Enter the name of the file (include the extension): ")
@@ -231,18 +254,8 @@ def readOptionInput():
         else:
             print("Error: Not a valid option.")
 
-def testing():
-    testData = pd.read_csv("testSample.csv")
-    plt.plot(testData["title"], testData["peak_pos"])
-    plt.grid(True)
-    title = input("Enter the name of the file (do not including extension): ")
-    title = f"{title}.jpg"
-    plt.savefig(title)
-    
-
 def main():
     readOptionInput()
-    # testing()
 
 if __name__ == "__main__":
     main()
