@@ -55,10 +55,11 @@ def filterData(data):
         print("3. By performer: ")
         print("4. By peak position: ")
         print("5. By weeks on chart: ")
-        print("6. Go back")
-        userInput = input("Enter an number: ")
+        print("6. By Top # Songs (ex: Top 10 songs)")
+        print("7. Go back")
+        userInput = input("Enter a number: ")
         #Sends the user back to the previous menu with the data unfiltered.
-        if userInput == "6":
+        if userInput == "7":
             readDataOption(data)
         elif userInput == "1":
             #Filters the data by chart weeks that the user specifies
@@ -83,6 +84,10 @@ def filterData(data):
             start = int(input("Enter the minimum amount of weeks in the chart: "))
             end = int(input("Enter the maximum amount of weeks in the chart: "))
             newData = data[(data["wks_on_chart"] >= start) & (data["wks_on_chart"] <= end)]
+        elif userInput == "6":
+            #Filters the data by Top # Songs (ex: Top 10 Songs)
+            num = int(input("Enter a number: "))
+            newData = data.head(num)
         else:
             print("Invalid input, returning to previous menu...")
             newData = data
