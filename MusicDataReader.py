@@ -86,7 +86,7 @@ def filterData(data):
             newData = data[(data["wks_on_chart"] >= start) & (data["wks_on_chart"] <= end)]
         elif userInput == "6":
             #Filters the data by Top # Songs (ex: Top 10 Songs)
-            num = int(input("Enter a number: "))
+            num = int(input("Enter a number for top songs: "))
             newData = data.head(num)
         else:
             print("Invalid input, returning to previous menu...")
